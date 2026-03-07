@@ -3,22 +3,28 @@
 
 using namespace std;
 
-void StudentManager::addStudent(string name, int id, string department) {
+StudentManager::~StudentManager() {
     for (int i = 0; i < (int)students.size(); i++) {
-        if (students[i].getId() == id) {
+        delete students[i];
+    }
+}
+
+void StudentManager::addStudent(Student* student) {
+    for (int i = 0; i < (int)students.size(); i++) {
+        if (students[i]->getId() == student->getId()) {
             cout << "Student with this ID already exists!\n";
             return;
         }
     }
 
-    Student newStudent(name, id, department);
-    students.push_back(newStudent);
+    students.push_back(student);
     cout << "Student added successfully.\n";
 }
 
 void StudentManager::removeStudent(int id) {
     for (int i = 0; i < (int)students.size(); i++) {
-        if (students[i].getId() == id) {
+        if (students[i]->getId() == id) {
+            delete students[i];
             students.erase(students.begin() + i);
             cout << "Student removed successfully.\n";
             return;
@@ -29,31 +35,8 @@ void StudentManager::removeStudent(int id) {
 
 void StudentManager::searchStudent(int id) const {
     for (int i = 0; i < (int)students.size(); i++) {
-        if (students[i].getId() == id) {
-            cout << "Student found:\n";
-            students[i].display();
-            return;
-        }
-    }
-    cout << "Student not found.\n";
-}
-
-void StudentManager::updateStudent(int id) {
-    for (int i = 0; i < (int)students.size(); i++) {
-        if (students[i].getId() == id) {
-            string newName, newDept;
-
-            cout << "Enter new name: ";
-            cin.ignore();
-            getline(cin, newName);
-
-            cout << "Enter new department: ";
-            getline(cin, newDept);
-
-            students[i].setName(newName);
-            students[i].setDepartment(newDept);
-
-            cout << "Student updated successfully.\n";
+        if (students[i]->getId() == id) {
+            students[i]->display();
             return;
         }
     }
@@ -61,12 +44,7 @@ void StudentManager::updateStudent(int id) {
 }
 
 void StudentManager::displayAll() const {
-    if (students.empty()) {
-        cout << "No students available.\n";
-        return;
-    }
-
     for (int i = 0; i < (int)students.size(); i++) {
-        students[i].display();
+        students[i]->display();
     }
 }

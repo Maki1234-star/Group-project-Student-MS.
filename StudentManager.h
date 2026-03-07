@@ -8,13 +8,14 @@ using namespace std;
 
 class StudentManager {
 private:
-    vector<Student> students;
+    vector<Student*> students;
 
 public:
-    void addStudent(string name, int id, string department);
+    ~StudentManager();
+
+    void addStudent(Student* student);
     void removeStudent(int id);
     void searchStudent(int id) const;
-    void updateStudent(int id);
     void displayAll() const;
 };
 

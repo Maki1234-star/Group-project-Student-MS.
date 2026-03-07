@@ -5,7 +5,7 @@
 using namespace std;
 
 class Student {
-private:
+protected:
     string name;
     int id;
     string department;
@@ -13,17 +13,16 @@ private:
 public:
     Student();
     Student(const string& n, int i, const string& d);
+    virtual ~Student();
 
     string getName() const;
     int getId() const;
     string getDepartment() const;
 
     void setName(const string& n);
-    void setId(int i);
     void setDepartment(const string& d);
 
-    void updateInfo(const string& newName, const string& newDepartment);
-    void display() const;
+    virtual void display() const;
 };
 
 #endif

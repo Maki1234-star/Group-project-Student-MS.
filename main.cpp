@@ -1,5 +1,7 @@
 #include <iostream>
 #include "StudentManager.h"
+#include "Undergraduate.h"
+#include "Graduate.h"
 
 using namespace std;
 
@@ -8,63 +10,53 @@ int main() {
     int choice;
 
     do {
-        cout << "\n===== Student Management System =====\n";
-        cout << "1. Add Student\n";
-        cout << "2. Remove Student\n";
-        cout << "3. Search Student\n";
-        cout << "4. Update Student\n";
-        cout << "5. Display All Students\n";
-        cout << "6. Exit\n";
-        cout << "Enter your choice: ";
+        cout << "\n1. Add Undergraduate\n";
+        cout << "2. Add Graduate\n";
+        cout << "3. Display All\n";
+        cout << "4. Exit\n";
+        cout << "Choice: ";
         cin >> choice;
 
-        string name, department;
-        int id;
+        string name, dept, topic;
+        int id, year;
 
         switch (choice) {
         case 1:
-            cout << "Enter Name: ";
+            cout << "Name: ";
             cin.ignore();
             getline(cin, name);
-            cout << "Enter ID: ";
+            cout << "ID: ";
             cin >> id;
+            cout << "Department: ";
             cin.ignore();
-            cout << "Enter Department: ";
-            getline(cin, department);
-            manager.addStudent(name, id, department);
+            getline(cin, dept);
+            cout << "Year: ";
+            cin >> year;
+
+            manager.addStudent(new Undergraduate(name, id, dept, year));
             break;
 
         case 2:
-            cout << "Enter ID to remove: ";
+            cout << "Name: ";
+            cin.ignore();
+            getline(cin, name);
+            cout << "ID: ";
             cin >> id;
-            manager.removeStudent(id);
+            cout << "Department: ";
+            cin.ignore();
+            getline(cin, dept);
+            cout << "Research Topic: ";
+            getline(cin, topic);
+
+            manager.addStudent(new Graduate(name, id, dept, topic));
             break;
 
         case 3:
-            cout << "Enter ID to search: ";
-            cin >> id;
-            manager.searchStudent(id);
-            break;
-
-        case 4:
-            cout << "Enter ID to update: ";
-            cin >> id;
-            manager.updateStudent(id);
-            break;
-
-        case 5:
             manager.displayAll();
             break;
-
-        case 6:
-            cout << "Exiting program...\n";
-            break;
-
-        default:
-            cout << "Invalid choice.\n";
         }
 
-    } while (choice != 6);
+    } while (choice != 4);
 
     return 0;
 }
