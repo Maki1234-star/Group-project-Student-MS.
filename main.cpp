@@ -2,6 +2,8 @@
 #include "StudentManager.h"
 #include "Undergraduate.h"
 #include "Graduate.h"
+#include "StudentException.h"
+#include "TemplateUtils.h"
 
 using namespace std;
 
@@ -13,50 +15,56 @@ int main() {
         cout << "\n1. Add Undergraduate\n";
         cout << "2. Add Graduate\n";
         cout << "3. Display All\n";
-        cout << "4. Exit\n";
-        cout << "Choice: ";
-        cin >> choice;
+        cout << "4. Search Student\n";
+        cout << "5. Remove Student\n";
+        cout << "6. Exit\n";
 
-        string name, dept, topic;
-        int id, year;
+        choice = getValidatedInput<int>("Choice: ");
 
-        switch (choice) {
-        case 1:
-            cout << "Name: ";
-            cin.ignore();
-            getline(cin, name);
-            cout << "ID: ";
-            cin >> id;
-            cout << "Department: ";
-            cin.ignore();
-            getline(cin, dept);
-            cout << "Year: ";
-            cin >> year;
+        try {
+            switch (choice) {
+                case 1: {
+                    string name = getValidatedInput<string>("Name: ");
+                    int id = getValidatedInput<int>("ID: ");
+                    string dept = getValidatedInput<string>("Department: ");
+                    int year = getValidatedInput<int>("Year: ");
 
-            manager.addStudent(new Undergraduate(name, id, dept, year));
-            break;
+                    manager.addStudent(new Undergraduate(name, id, dept, year));
+                    break;
+                }
+                case 2: {
+                    string name = getValidatedInput<string>("Name: ");
+                    int id = getValidatedInput<int>("ID: ");
+                    string dept = getValidatedInput<string>("Department: ");
+                    string topic = getValidatedInput<string>("Research Topic: ");
 
-        case 2:
-            cout << "Name: ";
-            cin.ignore();
-            getline(cin, name);
-            cout << "ID: ";
-            cin >> id;
-            cout << "Department: ";
-            cin.ignore();
-            getline(cin, dept);
-            cout << "Research Topic: ";
-            getline(cin, topic);
-
-            manager.addStudent(new Graduate(name, id, dept, topic));
-            break;
-
-        case 3:
-            manager.displayAll();
-            break;
+                    manager.addStudent(new Graduate(name, id, dept, topic));
+                    break;
+                }
+                case 3:
+                    manager.displayAll();
+                    break;
+                case 4: {
+                    int id = getValidatedInput<int>("Enter ID to search: ");
+                    manager.searchStudent(id);
+                    break;
+                }
+                case 5: {
+                    int id = getValidatedInput<int>("Enter ID to remove: ");
+                    manager.removeStudent(id);
+                    break;
+                }
+                case 6:
+                    cout << "Exiting program..." << endl;
+                    break;
+                default:
+                    cout << "Invalid choice. Please select a number from 1 to 6." << endl;
+            }
+        } catch (const StudentException& e) {
+            cout << "Error: " << e.what() << endl;
         }
 
-    } while (choice != 4);
+    } while (choice != 6);
 
     return 0;
 }

@@ -1,50 +1,63 @@
 #include "StudentManager.h"
+#include "StudentException.h"
+#include "TemplateUtils.h"
 #include <iostream>
 
 using namespace std;
 
 StudentManager::~StudentManager() {
-    for (int i = 0; i < (int)students.size(); i++) {
+    for (int i = 0; i < static_cast<int>(students.size()); i++) {
         delete students[i];
     }
 }
 
 void StudentManager::addStudent(Student* student) {
-    for (int i = 0; i < (int)students.size(); i++) {
+    if (student == nullptr) {
+        throw StudentException("Cannot add a null student.");
+    }
+
+    for (int i = 0; i < static_cast<int>(students.size()); i++) {
         if (students[i]->getId() == student->getId()) {
-            cout << "Student with this ID already exists!\n";
-            return;
+            delete student;
+            throw StudentException("Student with this ID already exists.");
         }
     }
 
     students.push_back(student);
-    cout << "Student added successfully.\n";
+    cout << "Student added successfully." << endl;
 }
 
 void StudentManager::removeStudent(int id) {
-    for (int i = 0; i < (int)students.size(); i++) {
+    for (int i = 0; i < static_cast<int>(students.size()); i++) {
         if (students[i]->getId() == id) {
             delete students[i];
             students.erase(students.begin() + i);
-            cout << "Student removed successfully.\n";
+            cout << "Student removed successfully." << endl;
             return;
         }
     }
-    cout << "Student not found.\n";
+
+    throw StudentException("Student not found.");
 }
 
 void StudentManager::searchStudent(int id) const {
-    for (int i = 0; i < (int)students.size(); i++) {
+    for (int i = 0; i < static_cast<int>(students.size()); i++) {
         if (students[i]->getId() == id) {
             students[i]->display();
             return;
         }
     }
-    cout << "Student not found.\n";
+
+    throw StudentException("Student not found.");
 }
 
 void StudentManager::displayAll() const {
-    for (int i = 0; i < (int)students.size(); i++) {
+    if (students.empty()) {
+        throw StudentException("No students available.");
+    }
+
+    displayValue("Total Students: ", students.size());
+    for (int i = 0; i < static_cast<int>(students.size()); i++) {
         students[i]->display();
     }
 }

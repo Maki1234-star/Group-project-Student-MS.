@@ -4,11 +4,9 @@
 #include <vector>
 #include "Student.h"
 
-using namespace std;
-
 class StudentManager {
 private:
-    vector<Student*> students;
+    std::vector<Student*> students;
 
 public:
     ~StudentManager();

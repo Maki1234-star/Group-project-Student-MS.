@@ -8,7 +8,7 @@ private:
     int year;
 
 public:
-    Undergraduate(const string& n, int i, const string& d, int y);
+    Undergraduate(const std::string& n, int i, const std::string& d, int y);
     void display() const override;
 };
 

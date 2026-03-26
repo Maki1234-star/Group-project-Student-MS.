@@ -2,25 +2,25 @@
 #define STUDENT_H
 
 #include <string>
-using namespace std;
 
 class Student {
 protected:
-    string name;
+    std::string name;
     int id;
-    string department;
+    std::string department;
 
 public:
     Student();
-    Student(const string& n, int i, const string& d);
+    Student(const std::string& n, int i, const std::string& d);
     virtual ~Student();
 
-    string getName() const;
+    std::string getName() const;
     int getId() const;
-    string getDepartment() const;
+    std::string getDepartment() const;
 
-    void setName(const string& n);
-    void setDepartment(const string& d);
+    void setName(const std::string& n);
+    void setId(int i);
+    void setDepartment(const std::string& d);
 
     virtual void display() const;
 };

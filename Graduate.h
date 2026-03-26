@@ -5,10 +5,10 @@
 
 class Graduate : public Student {
 private:
-    string researchTopic;
+    std::string researchTopic;
 
 public:
-    Graduate(const string& n, int i, const string& d, const string& topic);
+    Graduate(const std::string& n, int i, const std::string& d, const std::string& topic);
     void display() const override;
 };
 
